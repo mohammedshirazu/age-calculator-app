@@ -1,0 +1,208 @@
+@font-face {
+    font-family: poppins;
+    src: url(assets/fonts/Poppins-ExtraBoldItalic.ttf);
+    font-style: italic;
+}
+@font-face {
+    font-family: poppins;
+    src: url(assets/fonts/Poppins-Regular.ttf);
+    
+}
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+:root {
+    --primary-color: hsl(259, 100%, 65%);
+}
+
+body {
+    background-color: hsl(0, 0%, 86%);
+}
+
+.container {
+    width: 55vw;
+    min-height: 70vh;
+    margin: 15vh auto;
+    background-color: white;
+    padding: 5vw;
+    border-radius: 1vw 1vw 12vw 1vw;        
+}
+
+.input_section {
+    display: flex;
+    justify-content: space-between;
+    padding-right: 10vw;
+}
+
+.time_unit {
+    font-family: poppins;
+    font-weight: 900;
+    font-size: 0.6rem;
+    letter-spacing: 1px;
+    width: 10vw;
+}
+
+.time_inputs {
+    width: 100%;
+    height: 7vh;
+    padding: 2vh;
+    margin-top: 1vh;
+    font-size: 1.2rem;
+    font-weight: 900;
+    border-radius: 10px;
+    border: 1px solid darkgray;
+}
+
+.time_inputs:hover {
+    cursor: pointer;
+    border: 1px solid var(--primary-color);
+}
+small {
+    color: hsl(0, 60%, 45%);
+}
+
+.line_separation {
+    width: 45vw;
+    height: 10vh;
+    display: flex;
+    align-items: center;
+}
+
+.line {
+    width: 100%;
+}
+
+#convert_button {
+    z-index: 1;
+    width: 6vw;
+    height: 5.5vw;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    border: none;
+}
+
+#convert_button img {
+    width: 2.5vw;
+}
+
+#convert_button:hover {
+    transition: 1s;
+    background-color: hsl(0, 0%, 8%);
+    outline: none;
+    cursor: pointer;
+}
+
+.output_display {
+    font-size: 4.5rem;
+    font-family: poppins;
+    font-weight: 900;
+    font-style: italic;
+    letter-spacing: 0.5vw;
+}
+
+.display_digits {
+    color: var(--primary-color);
+}
+
+.attribution {
+    font-size: 0.5rem;
+    margin-top: 100px;
+}
+
+/* ----------------------MEDIA QUERIES------------------------------------ */
+
+@media (max-width: 920px) {
+    .container {
+        width: 80vw;
+    }
+
+    .time_unit {
+        width: 12vw;
+    }
+
+    .line_separation {
+        width: 70vw;
+    }
+
+    #convert_button {
+        width: 11vw;
+        height: 10vw;
+    }
+
+    .output_display {
+        font-size: 3.5;
+    }     
+}
+
+
+@media (max-width: 570px) {
+    .container {
+        width: 90vw;
+    }
+
+    .time_unit {
+        width: 20vw;
+    }
+
+    .line_separation {
+        width: 80vw;
+    }
+    
+    #convert_button {
+        width: 13vw;
+        height: 12vw;
+    }
+    .output_display {
+        font-size: 3rem;
+    }
+}
+
+
+@media (max-width: 375px) {
+    .container {
+        width: 90vw;
+        border-bottom-right-radius: 100px;
+        padding: 8vw;
+    }
+    
+    .input_section {
+        padding-right: 0;
+        justify-content: space-between;
+    }
+
+    .time_unit {
+        width: 20vw;
+        padding: 0;
+    }
+
+    .line_separation {
+        width: 74vw;
+        position: relative;
+    }
+    
+    .line {
+        width: 100%;
+    }
+    
+    #convert_button {
+        width: 15vw;
+        height: 14vw;
+        position: absolute;
+        left: 30vw;
+        background-color: var(--primary-color);
+        border-radius: 50%;
+        border: none;
+    }
+    
+    #convert_button img {
+        width: 6vw;
+    }
+    
+    .output_display {
+        font-size: 2.5rem;
+    }    
+}
