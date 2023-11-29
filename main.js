@@ -66,8 +66,28 @@ function handleSubmit(e) {
         const m = month - monthInput.value;
         const y = year - yearInput.value;
 
-        dayOutput.innerHTML = d;
-        monthOutput.innerHTML = m;
-        yearOutput.innerHTML = y;
+        // DISPLAY ANIMATION
+        function animate(i,t){
+            setTimeout(function() {
+                t.innerHTML = i;
+            }, 100 * i)
+        }
+
+        while(i <= y) {
+            animate(i,yy);
+            i++;
+        }
+
+        i=0;
+        while(i <= m) {
+            animate(i,mm);
+            i++;
+        }
+        
+        i=0;
+        while(i <= d) {
+            animate(i,dd);
+            i++;
+        }       
     }
 }
