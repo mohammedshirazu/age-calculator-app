@@ -15,9 +15,9 @@ const form = document.querySelector('form');
 form.addEventListener('submit', handleSubmit);
 
 const date = new Date();
-let day = date.getDate();
-let month = 1 + date.getMonth();
-let year = date.getFullYear();
+let currentDay = date.getDate();
+let currentMonth = 1 + date.getMonth();
+let currentYear = date.getFullYear();
 
 const months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
@@ -29,17 +29,35 @@ function validate() {
         if (!i.value) {
             i.style.borderColor = "hsl(0, 60%, 45%)";
             parent.style.color = "red";
-            parent.querySelector('small').innerText = "This field is required.";
+            parent.querySelector('small').innerText = "This field is required";
             validator = false;
         } else if (monthInput.value > 12 || monthInput.value < 0) {
-            document.querySelector('#month_text').style.color = "red";
-            monthInput.style.borderColor = "hsl(0, 60%, 45%)";
-            monthInput.parentElement.querySelector('small').innerText = "Must be a valid month.";
+            monthError();
+            monthInput.parentElement.querySelector('small').innerText = "Must be a valid month";
             validator = false;
         } else if (dayInput.value > 31 || dayInput.value < 0) {
-            document.querySelector('#day_text').style.color = "red";
-            dayInput.style.borderColor = "hsl(0, 60%, 45%)";
-            dayInput.parentElement.querySelector('small').innerText = "Must be a valid day.";
+            dayError();
+            dayInput.parentElement.querySelector('small').innerText = "Must be a valid day";
+            validator = false;
+        } else if (yearInput.value > currentYear ) {
+            yearError();
+            yearInput.parentElement.querySelector('small').innerText = "Must be in the past";
+            validator = false;
+        } else if (yearInput.value == currentYear && monthInput.value > currentMonth) {
+            monthError();
+            monthInput.parentElement.querySelector('small').innerText = "Must be in the past";
+            validator = false;
+        } else if (yearInput.value == currentYear && monthInput.value == currentMonth && dayInput.value > currentDay ) {
+            dayError();
+            dayInput.parentElement.querySelector('small').innerText = "Must be in the past";
+            validator = false;
+        } else if (dayInput.value > months[monthInput.value - 1]) {
+            if(monthInput.value == 2 && dayInput.value == 29 && (yearInput.value % 4) == 0){
+                validator = true;
+                return validator;
+            }
+            dayError();
+            dayInput.parentElement.querySelector('small').innerText = "Must be a valid date";
             validator = false;
         } else {
             i.style.borderColor = "black";
@@ -50,44 +68,58 @@ function validate() {
     return validator;
 }
 
+//HANDLING ERRORS
+function dayError() {
+    document.querySelector('#day_text').style.color = "red";
+    dayInput.style.borderColor = "hsl(0, 60%, 45%)";
+}
+
+function monthError() {
+    document.querySelector('#month_text').style.color = "red";
+    monthInput.style.borderColor = "hsl(0, 60%, 45%)";
+}
+
+function yearError() {
+    document.querySelector('#year_text').style.color = "red";
+    yearInput.style.borderColor = "hsl(0, 60%, 45%)";
+}
+
+//SUBMIT
 function handleSubmit(e) {
     e.preventDefault();
     if (validate()) {
-        if (dayInput.value > day) {
-            day = day + months[month-1];
-            month = month - 1;
-        }
-        if (monthInput.value > month) {
-            month = month + 12;
-            year = year - 1;
+        if (dayInput.value > currentDay) {
+            currentDay = currentDay + months[currentMonth-1];
+            currentMonth = currentMonth - 1;
         }
 
-        const d = day - dayInput.value;
-        const m = month - monthInput.value;
-        const y = year - yearInput.value;
+        if (monthInput.value > currentMonth) {
+            currentMonth = currentMonth + 12;
+            currentYear = currentYear - 1;
+        }
 
-        // DISPLAY ANIMATION
+        const d = currentDay - dayInput.value;
+        const m = currentMonth - monthInput.value;
+        const y = currentYear - yearInput.value;
+
+        // ANIMATING THE DISPLAY
+        let dd = dayOutput;
+        let mm = monthOutput;
+        let yy = yearOutput;        
         function animate(i,t){
-            setTimeout(function() {
-                t.innerHTML = i;
-            }, 100 * i)
+            setTimeout(function() { t.innerHTML = i; }, 100 * i)
         }
 
-        while(i <= y) {
+        for(let i=0; i <= y; i++) {
             animate(i,yy);
-            i++;
         }
 
-        i=0;
-        while(i <= m) {
+        for(let i=0; i <= m; i++) {
             animate(i,mm);
-            i++;
         }
         
-        i=0;
-        while(i <= d) {
+        for(let i=0; i <= d; i++) {
             animate(i,dd);
-            i++;
-        }       
+        }        
     }
 }
