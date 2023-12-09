@@ -22,36 +22,56 @@ let currentYear = date.getFullYear();
 const months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
 function validate() {
+
     const inputs = document.querySelectorAll('input');
     let validator = true;
     inputs.forEach((i) => {
         const parent = i.parentElement;
-        if (!i.value) {
+        if (i.value === "") {
             i.style.borderColor = "hsl(0, 60%, 45%)";
             parent.style.color = "red";
             parent.querySelector('small').innerText = "This field is required";
             validator = false;
-        } else if (monthInput.value > 12 || monthInput.value < 0) {
+            return validator;
+        }
+        
+        if (monthInput.value > 12 || monthInput.value < 1) {
             monthError();
             monthInput.parentElement.querySelector('small').innerText = "Must be a valid month";
             validator = false;
-        } else if (dayInput.value > 31 || dayInput.value < 0) {
+        }
+        
+        if (dayInput.value > 31 || dayInput.value < 1) {
             dayError();
             dayInput.parentElement.querySelector('small').innerText = "Must be a valid day";
             validator = false;
-        } else if (yearInput.value > currentYear ) {
+        }
+
+        if (yearInput.value < 1) {
+            yearError();
+            yearInput.parentElement.querySelector('small').innerText = "Must be a valid year";
+            validator = false;
+        }
+        
+        if (yearInput.value > currentYear) {
             yearError();
             yearInput.parentElement.querySelector('small').innerText = "Must be in the past";
             validator = false;
-        } else if (yearInput.value == currentYear && monthInput.value > currentMonth) {
+        }
+        
+        if (yearInput.value == currentYear && monthInput.value > currentMonth) {
             monthError();
             monthInput.parentElement.querySelector('small').innerText = "Must be in the past";
             validator = false;
-        } else if (yearInput.value == currentYear && monthInput.value == currentMonth && dayInput.value > currentDay ) {
+        }
+        
+        if (yearInput.value == currentYear && monthInput.value == currentMonth && dayInput.value > currentDay ) {
             dayError();
             dayInput.parentElement.querySelector('small').innerText = "Must be in the past";
             validator = false;
-        } else if (dayInput.value > months[monthInput.value - 1]) {
+        }
+        
+        if (dayInput.value > months[monthInput.value - 1]) {
             if(monthInput.value == 2 && dayInput.value == 29 && (yearInput.value % 4) == 0){
                 validator = true;
                 return validator;
@@ -59,16 +79,12 @@ function validate() {
             dayError();
             dayInput.parentElement.querySelector('small').innerText = "Must be a valid date";
             validator = false;
-        } else {
-            i.style.borderColor = "black";
-            parent.querySelector('small').innerText = "";
-            validator = true;
         }
     })
     return validator;
 }
 
-//HANDLING ERRORS
+//ERROR SIGNALS
 function dayError() {
     document.querySelector('#day_text').style.color = "red";
     dayInput.style.borderColor = "hsl(0, 60%, 45%)";
@@ -105,7 +121,8 @@ function handleSubmit(e) {
         // ANIMATING THE DISPLAY
         let dd = dayOutput;
         let mm = monthOutput;
-        let yy = yearOutput;        
+        let yy = yearOutput;      
+
         function animate(i,t){
             setTimeout(function() { t.innerHTML = i; }, 100 * i)
         }
@@ -120,6 +137,16 @@ function handleSubmit(e) {
         
         for(let i=0; i <= d; i++) {
             animate(i,dd);
-        }        
+        }
+
+    } else {
+        setTimeout(function() {
+            const inputs = document.querySelectorAll('input');
+            inputs.forEach((i) => {
+                i.style.borderColor = "gray";
+                i.parentElement.style.color = "black";  //default color
+                i.parentElement.querySelector('small').innerText = "";
+            })
+        }, 2000);
     }
 }
