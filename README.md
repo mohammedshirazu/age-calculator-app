@@ -41,6 +41,4 @@ Users should be able to:
 
 ### What I learned
 -I learned to work with null inputs.
--I did a lot of debugging to get the desired result and I came to discover some of the ways errors develop in a program.
-
-Check out [The Markdown Guide](https://www.markdownguide.org/) to learn more.
+-I did a lot of debugging to get the desired result and came to discover some of the ways errors develop in a program.
